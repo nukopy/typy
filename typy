@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import os
+import re
+import sys
+from typing import List, Match, Optional
+
+# input
+args: List[str] = sys.argv
+args_str: str = " ".join(args)
+
+# type checking
+PADDING = 40
+print(' type checking '.center(PADDING, '-'))
+eval_type_checking: int = os.system(f'mypy {args_str}')
+if eval_type_checking == 0:  # success
+    # get filename
+    filenames = [arg for arg in args[1:] if '.py' in arg]
+    filename = filenames[0] if len(filenames) == 1 else None
+
+    if filename:
+        print('\n', ' run script '.center(PADDING, '-'))
+        # run only when the number of script(.py) is 1
+        os.system(f'python {filename}')
